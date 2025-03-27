@@ -1,0 +1,9 @@
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Simple Test Suite">
+    <test name="Simple Test">
+        <classes>
+            <class name="airline.testclass"/>
+        </classes>
+    </test>
+</suite>
