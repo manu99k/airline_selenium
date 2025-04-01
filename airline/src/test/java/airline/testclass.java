@@ -43,13 +43,7 @@ public class testclass {
         System.out.println(topNavItems);
         
         for(WebElement e:topNavItems) {
-        	
-        	
-        	//System.out.println(e.getAttribute("href"));
-        	
         	String url= e.getAttribute("href");
-        	
-        	System.out.println(e.getText());
         	
         	URL link = new URL(url); 
         	HttpURLConnection httpURLConnection = (HttpURLConnection) link.openConnection(); 
