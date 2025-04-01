@@ -57,8 +57,6 @@ public class testclass {
         				  System.out.println(url + " - " + httpURLConnection.getResponseMessage() +" - " + "is a broken link"); 
         			  } 
         			  
-        			}else {
-        				System.out.println("Contact us is missing");
         			}
         }
       
