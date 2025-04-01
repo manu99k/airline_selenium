@@ -30,7 +30,7 @@ public class testclass {
 
     @Test
     public void testNavigationItems() throws Exception {
-        driver.get("https://www.airnavradar.com/@17.38410,78.45640,z6");
+       driver.get("https://www.airnavradar.com/@17.38410,78.45640,z6");
         
        
         driver.findElement(By.xpath("//p[text()='Consent']/..")).click();
@@ -39,60 +39,34 @@ public class testclass {
         
 
        
-        List<WebElement> topNavItems = driver.findElements(By.xpath("//nav/ul/li"));
+        List<WebElement> topNavItems = driver.findElements(By.xpath("//nav/ul/li//li[contains(@class,'NavigationMenuListItem ')]/a"));
         System.out.println(topNavItems);
         
-        List<WebElement> subItemLabels = null;
-        List<WebElement> subRootItemLabels = null;
-        Set<String> navigationLabels = new HashSet();
-
-       
-        for (WebElement navItem : topNavItems) {
-            Actions action = new Actions(driver);
-
-            action.moveToElement(navItem).build().perform();
-            System.out.println(navItem);
-            Thread.sleep(500);
-            WebElement topLevelLabel = navItem.findElement(By.xpath("//div[@class='ListItemLabel']/span"));
-            navigationLabels.add(topLevelLabel.getText());
-            subItemLabels = navItem.findElements(By.xpath("//div[@class='ListItemLabel']/span"));
-            subRootItemLabels = navItem.findElements(By.xpath("//a[@class='ListItemLabel']"));
-            for (WebElement subLabel : subItemLabels) {
-                navigationLabels.add(subLabel.getText());
-                
-
-            }
-            
-            for (WebElement subRootLabel : subRootItemLabels) {
-                navigationLabels.add(subRootLabel.getText());
-                
-            }
+        for(WebElement e:topNavItems) {
+        	
+        	
+        	//System.out.println(e.getAttribute("href"));
+        	
+        	String url= e.getAttribute("href");
+        	
+        	System.out.println(e.getText());
+        	
+        	URL link = new URL(url); 
+        	HttpURLConnection httpURLConnection = (HttpURLConnection) link.openConnection(); 
+        	httpURLConnection.connect();
+        			if(e.getAttribute("href").contains("contactus")) { 
+        			  if (httpURLConnection.getResponseCode() == 200  ) 
+        			  { 
+        				  System.out.println(url + " - " + httpURLConnection.getResponseMessage()); 
+        			  } 
+        			  else {
+        				  System.out.println(url + " - " + httpURLConnection.getResponseMessage() +" - " + "is a broken link"); 
+        			  } 
+        			  
+        			}else {
+        				System.out.println("Contact us is missing");
+        			}
         }
-
-       
-        System.out.println("Navigation Labels:");
-        for (String label : navigationLabels) {
-            System.out.println(label);
-            if(label.contains("Contact Us")) {
-            	System.out.println("TC1 has passed");
-            }
-        }
-        
-        for (WebElement subLabel : subItemLabels) {
-            navigationLabels.add(subLabel.getText());
-            subLabel.click();
-            driver.navigate().back();
-            Thread.sleep(2000);
-
-        }
-        
-        for (WebElement subRootLabel : subRootItemLabels) {
-            navigationLabels.add(subRootLabel.getText());
-            subRootLabel.click();
-            driver.navigate().back();
-            Thread.sleep(2000);
-        }
-        
       
     }
 
